@@ -1,0 +1,21 @@
+#!/bin/bash
+
+FOUND=0
+
+echo 'Checking if listener exists.'
+if [[ -n $(lsof -t -i :19421) ]]; then
+  echo 'Killing process.'
+  kill -9 $(lsof -t -i :19421)
+  FOUND=1
+else
+  echo 'Process not found.'
+fi
+
+if [ $FOUND -eq 1 ]; then
+  echo 'Removing .zoomus directory.'
+  rm -rf ~/.zoomus
+  echo 'Creating dummy directory.'
+  touch ~/.zoomus
+fi
+
+echo 'Done.'
